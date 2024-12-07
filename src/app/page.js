@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Image from "next/image";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination } from "swiper/modules";
 import "swiper/css";
@@ -9,15 +8,15 @@ import "swiper/css/pagination";
 
 export default function HomePage() {
   const [isMobile, setIsMobile] = useState(false);
-  const [formMessage, setFormMessage] = useState(null); // Track the message for the user
-  const [messageType, setMessageType] = useState("success"); // Track message type ('success' or 'error')
+  const [formMessage, setFormMessage] = useState(null);
+  const [messageType, setMessageType] = useState("success");
 
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth <= 900);
     };
 
-    handleResize(); // Set initial state
+    handleResize();
     window.addEventListener("resize", handleResize);
 
     return () => window.removeEventListener("resize", handleResize);
@@ -25,8 +24,10 @@ export default function HomePage() {
 
   useEffect(() => {
     const yearElement = document.getElementById("year");
-    const currentYear = new Date().getFullYear();
-    yearElement.textContent = currentYear;
+    if (yearElement) {
+      const currentYear = new Date().getFullYear();
+      yearElement.textContent = currentYear;
+    }
   }, []);
 
   const handleSubmit = async (e) => {
@@ -51,7 +52,7 @@ export default function HomePage() {
       if (response.ok) {
         setMessageType("success");
         setFormMessage(result.message || "Successfully subscribed!");
-        form.reset(); // Clear the form inputs
+        form.reset();
       } else {
         setMessageType("error");
         setFormMessage(result.error || "Something went wrong. Please try again.");
@@ -67,7 +68,7 @@ export default function HomePage() {
     <>
       <header>
         <div className="logo">
-          <Image src="/assets/logo-white.svg" alt="EnhanceMe Logo" width={500} height={150} />
+          <img src="/assets/logo-white.svg" alt="EnhanceMe Logo" />
         </div>
         <section className="content-header">
           <p>
@@ -80,11 +81,7 @@ export default function HomePage() {
       <main>
         {isMobile ? (
           <section className="swiper">
-            <Swiper
-              modules={[Pagination]}
-              pagination={{ clickable: true }}
-              loop
-            >
+            <Swiper modules={[Pagination]} pagination={{ clickable: true }} loop>
               <SwiperSlide>
                 <img src="/assets/image_1_mobile.jpg" alt="Profile Image 1" />
               </SwiperSlide>
@@ -159,7 +156,11 @@ export default function HomePage() {
             <button type="submit">Notify me</button>
           </form>
           {formMessage && (
-            <p className={`form-message ${messageType}`}>
+            <p
+              className={`form-message ${messageType}`}
+              aria-live="polite"
+              role="alert"
+            >
               {formMessage}
             </p>
           )}

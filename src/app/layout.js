@@ -13,11 +13,11 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <head>
-        {/* Add Clash Grotesk via Google Fonts */}
         <link
           href="https://fonts.googleapis.com/css2?family=Clash+Grotesk:wght@200;400;600;800&display=swap"
           rel="stylesheet"
         />
+        <link rel="icon" href="/assets/favicon.ico" />
       </head>
       <body className={`${prata.className} ${poppins.className}`}>
         {children}
