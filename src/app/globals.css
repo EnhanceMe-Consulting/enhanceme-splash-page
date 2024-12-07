@@ -1,42 +1,286 @@
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@import url("https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css");
+@import url("https://fonts.googleapis.com/css2?family=Prata&family=Poppins:wght@300;400;600;700&family=Clash+Grotesk:wght@200;400;600;800&display=swap");
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
-html,
-body {
-  max-width: 100vw;
-  overflow-x: hidden;
-}
-
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-* {
-  box-sizing: border-box;
-  padding: 0;
+/* Your existing CSS from styles.css goes here */
+/* General Reset */
+html, body {
+  height: 100%;
+  font-size: 62.5%; /* 1rem = 10px */
   margin: 0;
 }
 
-a {
-  color: inherit;
-  text-decoration: none;
+/* Use border-box box-sizing for all elements */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
+/* Variables */
+:root {
+  --primary-color: #181818;
+  --secondary-color: #e7c44a;
+  --text-color: #FFFFFF;
+
+  --primary-font: 'Clash Grotesk', sans-serif;
+  --secondary-font: 'Prata', serif;
+  --display-font: 'Poppins', sans-serif;
+
+  --font-size-small: 1.2rem;
+  --font-size-medium: 1.4rem;
+  --font-size-large: 2.8rem;
+  --font-size-xlarge: 3.2rem;
+}
+
+body {
+  font-family: var(--primary-font);
+  color: var(--text-color);
+  background-color: var(--primary-color);
+  line-height: 1.5;
+  text-align: center;
+  font-size: var(--font-size-medium);
+  font-weight: 300;
+}
+
+/* Logo */
+.logo {
+  margin: 10rem auto 2rem;
+  padding: 0 2rem;
+}
+
+.logo img {
+  width: 100%;
+  max-width: 30rem;
+  height: 4rem;
+}
+
+/* Header Content */
+.content-header {
+  padding: 2rem;
+  font-family: var(--secondary-font);
+  font-size: var(--font-size-xlarge);
+  color: var(--secondary-color);
+}
+
+.content-header .launch-date {
+  font-family: var(--primary-font);
+  font-size: var(--font-size-large);
+  color: var(--text-color);
+}
+
+@media (min-width: 900px) {
+  .logo {
+    padding: unset;
+  }
+
+  .logo img {
+    max-width: 52rem;
+  }
+}
+
+/* Background Pattern */
+.background-pattern {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  height: 45%;
+  background-image: url("/assets/pattern-background.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  z-index: -1;
+}
+
+/* Gallery */
+.gallery {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+}
+
+
+.gallery img.large {
+  max-width: 30%;
+}
+
+.gallery img.medium {
+  max-width: 18%;
+}
+
+.gallery img.small {
+  max-width: 14%;
+}
+
+/* Swiper */
+.swiper {
+  display: none;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.swiper-pagination-bullet-active {
+  background-color: var(--secondary-color) !important;
+}
+
+@media (max-width: 900px) {
+  .swiper {
+    display: block;
+  }
+}
+
+/* Subscribe Section */
+.subscribe {
+  font-size: var(--font-size-large);
+  margin: 4rem auto;
+}
+
+.subscribe .content-subscribe {
+  padding: 2rem;
+}
+
+.subscribe .privacy-note {
+  font-size: var(--font-size-medium);
+  font-family: var(--display-font);
+}
+
+ .subscribe p:first-child{
+  margin: 0;
+ }
+
+/* Form Styling */
+.subscribe form {
+  display: flex;
+  flex-direction: column; /* Default vertical layout for mobile */
+  align-items: center;
+  gap: 1.5rem;
+}
+
+/* General Reset for Hidden Inputs */
+form input[type="hidden"] {
+  display: none; /* Ensure hidden inputs don't affect layout */
+}
+
+/* Input and Button Styling */
+form input.form-input,
+form button {
+  padding: 1.2rem;
+  border: 0.1rem solid var(--text-color);
+  border-radius: 0.5rem;
+  font-size: var(--font-size-medium);
+  background-color: var(--primary-color);
+  color: var(--text-color);
+  font-family: var(--display-font);
+  width: 95%; /* Default for mobile */
+  max-width: 100%; /* Prevent overflow */
+  margin: 0; /* Reset margins */
+}
+
+form input::placeholder {
+  color: var(--text-color); /* Ensure placeholder text is white */
+  opacity: 1; /* Ensure consistent visibility across browsers */
+}
+
+form button {
+  background-color: var(--secondary-color);
+  color: var(--primary-color);
+  cursor: pointer;
+  border: 0.1rem solid var(--secondary-color);
+}
+
+@media (min-width: 900px) {
+  .subscribe form {
+    flex-direction: row; /* Switch to horizontal layout for desktop */
+    margin: 0 auto; /* Center align form */
+    width: 70%;
+  }
+
+  form input.name-input {
+    flex: 0 0 37%; /* Name input takes 40% of the row */
+  }
+
+  form input.email-input {
+    flex: 0 0 43%; /* Email input takes 45% of the row */
+  }
+
+  form button {
+    flex: 1 /* Button takes remaining space */
+  }
+
+  form input, form button {
+    width: auto; /* Reset width to auto */
+  }
+}
+
+@media (min-width: 1270px) {
+  .subscribe form {
+    width: 65%;
+  }
+
+  form input[name="FNAME"] {
+    flex: 0 0 40%; /* Name input takes 40% of the row */
+  }
+
+  form input[name="EMAIL"] {
+    flex: 0 0 45%; /* Email input takes 45% of the row */
+  }
+
+}
+
+/* Footer Styles */
+footer {
+  display: flex;
+  flex-direction: column; /* Stack vertically by default for mobile */
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem; /* Space between text and icons */
+  padding: 2rem;
+  color: var(--text-color);
+  font-size: var(--font-size-medium);
+}
+
+.social-icons {
+  display: flex;
+  gap: 1rem; 
+}
+
+
+.social-icons p{
+  display:none;
+}
+
+/* Ensure focus indication for links */
+.social-icons a {
+  outline: none;
+  transition: transform 0.2s;
+  cursor: pointer;
+}
+
+.social-icons img {
+  width: 3rem;
+  height: 3rem;
+  transition: transform 0.2s ease-in-out;
+}
+
+.social-icons a:hover img,
+.social-icons a:focus img {
+  transform: scale(1.2);
+}
+
+/* Desktop Layout */
+@media (min-width: 900px) {
+  footer {
+    flex-direction: row; /* Align items in a single row */
+    justify-content: space-between; /* Space between text and icons */
+    padding-top: 12rem;
+  }
+  footer .social-icons{
+    margin-left: auto;
+  }
+  .footer-container {
+    max-width: 90%;
+    margin: 0 auto;
+  }
+  .social-icons p{
+    display:block;
   }
 }
