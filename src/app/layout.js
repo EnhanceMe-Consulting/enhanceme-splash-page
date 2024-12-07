@@ -1,4 +1,8 @@
 import "./globals.css";
+import { Prata, Poppins } from "next/font/google";
+
+const prata = Prata({ subsets: ["latin"], weight: "400" });
+const poppins = Poppins({ subsets: ["latin"], weight: ["300", "400", "600", "700"] });
 
 export const metadata = {
   title: "EnhanceMe - Launching Soon",
@@ -9,13 +13,19 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <head>
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
-        <link href="https://fonts.googleapis.com/css2?family=Prata&family=Poppins:wght@300;400;600;700&family=Clash+Grotesk:wght@200;400;600;800&display=swap" rel="stylesheet" />
-        <link rel="icon" href="/assets/favicon.ico" />
+        {/* Add Clash Grotesk via Google Fonts */}
+        <link
+          href="https://fonts.googleapis.com/css2?family=Clash+Grotesk:wght@200;400;600;800&display=swap"
+          rel="stylesheet"
+        />
       </head>
-      <body>{children}</body>
+      <body className={`${prata.className} ${poppins.className}`}>
+        {children}
+      </body>
     </html>
   );
 }
+
+
 
 

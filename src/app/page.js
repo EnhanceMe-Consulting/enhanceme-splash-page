@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination } from "swiper/modules";
 import "swiper/css";
@@ -66,11 +67,11 @@ export default function HomePage() {
     <>
       <header>
         <div className="logo">
-          <img src="/assets/logo-white.svg" alt="EnhanceMe Logo" />
+          <Image src="/assets/logo-white.svg" alt="EnhanceMe Logo" width={500} height={150} />
         </div>
         <section className="content-header">
           <p>
-            Everything is about relationships. <br /> We'll help you enhance
+            Everything is about relationships. <br /> We&#39;ll help you enhance
             your potential in building them.
           </p>
           <p className="launch-date">Coming soon.</p>
