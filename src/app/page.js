@@ -73,6 +73,7 @@ export default function HomePage() {
 
   return (
     <>
+    <div className="background-pattern"></div>
       <header>
         <div className="logo">
           <img src="/assets/logo-white.svg" alt="EnhanceMe Logo" />
