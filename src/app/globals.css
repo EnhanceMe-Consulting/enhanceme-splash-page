@@ -187,6 +187,14 @@ form button {
   border: 0.1rem solid var(--secondary-color);
 }
 
+/* Form Messages */
+.form-message {
+  margin-top: 2rem;
+  font-size: 1.6rem;
+  text-align: center;
+  font-style: italic;
+}
+
 @media (min-width: 900px) {
   .subscribe form {
     flex-direction: row; /* Switch to horizontal layout for desktop */

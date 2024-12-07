@@ -8,8 +8,9 @@ import "swiper/css/pagination";
 
 export default function HomePage() {
   const [isMobile, setIsMobile] = useState(false);
+  const [formMessage, setFormMessage] = useState(null); // Track the message for the user
+  const [messageType, setMessageType] = useState("success"); // Track message type ('success' or 'error')
 
-  // Determine if the screen is mobile
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth <= 900);
@@ -47,13 +48,17 @@ export default function HomePage() {
 
       const result = await response.json();
       if (response.ok) {
-        alert(result.message); // Success message
+        setMessageType("success");
+        setFormMessage(result.message || "Successfully subscribed!");
+        form.reset(); // Clear the form inputs
       } else {
-        alert(`Error: ${result.error || "Something went wrong"}`);
+        setMessageType("error");
+        setFormMessage(result.error || "Something went wrong. Please try again.");
       }
     } catch (error) {
       console.error("Error:", error);
-      alert("An unexpected error occurred. Please try again.");
+      setMessageType("error");
+      setFormMessage("An unexpected error occurred. Please try again.");
     }
   };
 
@@ -72,7 +77,6 @@ export default function HomePage() {
         </section>
       </header>
       <main>
-        {/* Conditionally render components */}
         {isMobile ? (
           <section className="swiper">
             <Swiper
@@ -153,6 +157,11 @@ export default function HomePage() {
             />
             <button type="submit">Notify me</button>
           </form>
+          {formMessage && (
+            <p className={`form-message ${messageType}`}>
+              {formMessage}
+            </p>
+          )}
         </section>
       </main>
       <footer>
