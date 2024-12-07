@@ -1,13 +1,20 @@
-export async function POST(req) {
+export async function GET(req) {
+    return new Response(JSON.stringify({ message: "API is working!" }), {
+      status: 200,
+      headers: { "Content-Type": "application/json" },
+    });
+  }
+  
+  export async function POST(req) {
     try {
       const body = await req.json();
-  
       const { name, email } = body;
   
       if (!name || !email) {
-        return new Response(JSON.stringify({ error: "Name and email are required" }), {
-          status: 400,
-        });
+        return new Response(
+          JSON.stringify({ error: "Name and email are required" }),
+          { status: 400 }
+        );
       }
   
       const API_KEY = process.env.MAILCHIMP_API_KEY;
@@ -19,7 +26,9 @@ export async function POST(req) {
       const response = await fetch(url, {
         method: "POST",
         headers: {
-          Authorization: `Basic ${Buffer.from(`any:${API_KEY}`).toString("base64")}`,
+          Authorization: `Basic ${Buffer.from(`any:${API_KEY}`).toString(
+            "base64"
+          )}`,
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
@@ -42,7 +51,7 @@ export async function POST(req) {
         status: 200,
       });
     } catch (error) {
-      console.error("Error:", error);
+      console.error("Unexpected Error:", error);
       return new Response(JSON.stringify({ error: "Internal Server Error" }), {
         status: 500,
       });
