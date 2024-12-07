@@ -1,46 +1,24 @@
 "use client";
 
-import { useEffect } from "react";
-import Swiper, { Pagination } from "swiper";
+import { useEffect, useState } from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Pagination } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
 
-Swiper.use([Pagination]); // Enable Pagination module
-
 export default function HomePage() {
-  useEffect(() => {
-    const swiperContainer = document.querySelector(".swiper");
-    const gallery = document.querySelector(".gallery");
+  const [isMobile, setIsMobile] = useState(false);
 
-    const toggleSwiper = () => {
-      if (window.innerWidth <= 900) {
-        // Mobile: Initialize Swiper
-        if (!swiperContainer.swiper) {
-          new Swiper(".swiper", {
-            loop: true,
-            pagination: {
-              el: ".swiper-pagination",
-              clickable: true,
-            },
-          });
-          gallery.style.display = "none"; // Hide the row layout on mobile
-          swiperContainer.style.display = "block"; // Show Swiper
-        }
-      } else {
-        // Desktop: Destroy Swiper if initialized and show the row layout
-        if (swiperContainer.swiper) {
-          swiperContainer.swiper.destroy(true, true);
-        }
-        gallery.style.display = "flex"; // Show the row layout on desktop
-        swiperContainer.style.display = "none"; // Hide Swiper
-      }
+  // Determine if the screen is mobile
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 900);
     };
 
-    toggleSwiper();
-    window.addEventListener("resize", toggleSwiper);
+    handleResize(); // Set initial state
+    window.addEventListener("resize", handleResize);
 
-    // Cleanup
-    return () => window.removeEventListener("resize", toggleSwiper);
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   useEffect(() => {
@@ -48,6 +26,36 @@ export default function HomePage() {
     const currentYear = new Date().getFullYear();
     yearElement.textContent = currentYear;
   }, []);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const form = e.target;
+    const data = {
+      name: form.name.value,
+      email: form.email.value,
+    };
+
+    try {
+      const response = await fetch("/api/subscribe", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      const result = await response.json();
+      if (response.ok) {
+        alert(result.message); // Success message
+      } else {
+        alert(`Error: ${result.error || "Something went wrong"}`);
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      alert("An unexpected error occurred. Please try again.");
+    }
+  };
 
   return (
     <>
@@ -64,53 +72,61 @@ export default function HomePage() {
         </section>
       </header>
       <main>
-        <section className="gallery">
-          <img
-            src="/assets/image_1.jpg"
-            alt="Profile Image 1"
-            className="medium"
-          />
-          <img
-            src="/assets/image_2.jpg"
-            alt="Profile Image 2"
-            className="small"
-          />
-          <img
-            src="/assets/image_3.jpg"
-            alt="Profile Image 3"
-            className="large"
-          />
-          <img
-            src="/assets/image_4.jpg"
-            alt="Profile Image 4"
-            className="small"
-          />
-          <img
-            src="/assets/image_5.jpg"
-            alt="Profile Image 5"
-            className="medium"
-          />
-        </section>
-        <section className="swiper">
-          <div className="swiper-wrapper">
-            <div className="swiper-slide">
-              <img src="/assets/image_1_mobile.jpg" alt="Profile Image 1" />
-            </div>
-            <div className="swiper-slide">
-              <img src="/assets/image_2_mobile.jpg" alt="Profile Image 2" />
-            </div>
-            <div className="swiper-slide">
-              <img src="/assets/image_3_mobile.jpg" alt="Profile Image 3" />
-            </div>
-            <div className="swiper-slide">
-              <img src="/assets/image_4_mobile.jpg" alt="Profile Image 4" />
-            </div>
-            <div className="swiper-slide">
-              <img src="/assets/image_5_mobile.jpg" alt="Profile Image 5" />
-            </div>
-          </div>
-          <div className="swiper-pagination"></div>
-        </section>
+        {/* Conditionally render components */}
+        {isMobile ? (
+          <section className="swiper">
+            <Swiper
+              modules={[Pagination]}
+              pagination={{ clickable: true }}
+              loop
+            >
+              <SwiperSlide>
+                <img src="/assets/image_1_mobile.jpg" alt="Profile Image 1" />
+              </SwiperSlide>
+              <SwiperSlide>
+                <img src="/assets/image_2_mobile.jpg" alt="Profile Image 2" />
+              </SwiperSlide>
+              <SwiperSlide>
+                <img src="/assets/image_3_mobile.jpg" alt="Profile Image 3" />
+              </SwiperSlide>
+              <SwiperSlide>
+                <img src="/assets/image_4_mobile.jpg" alt="Profile Image 4" />
+              </SwiperSlide>
+              <SwiperSlide>
+                <img src="/assets/image_5_mobile.jpg" alt="Profile Image 5" />
+              </SwiperSlide>
+            </Swiper>
+          </section>
+        ) : (
+          <section className="gallery">
+            <img
+              src="/assets/image_1.jpg"
+              alt="Profile Image 1"
+              className="medium"
+            />
+            <img
+              src="/assets/image_2.jpg"
+              alt="Profile Image 2"
+              className="small"
+            />
+            <img
+              src="/assets/image_3.jpg"
+              alt="Profile Image 3"
+              className="large"
+            />
+            <img
+              src="/assets/image_4.jpg"
+              alt="Profile Image 4"
+              className="small"
+            />
+            <img
+              src="/assets/image_5.jpg"
+              alt="Profile Image 5"
+              className="medium"
+            />
+          </section>
+        )}
+
         <section className="subscribe">
           <div className="content-subscribe">
             <p>Stay ahead of the curve. Subscribe!</p>
@@ -118,7 +134,7 @@ export default function HomePage() {
               We respect your privacy. No spam, only valuable updates.
             </p>
           </div>
-          <form action="/.netlify/functions/subscribe" method="POST">
+          <form onSubmit={handleSubmit}>
             <input
               type="text"
               placeholder="Name (Required)"
@@ -148,11 +164,7 @@ export default function HomePage() {
         </div>
         <div className="social-icons">
           <p>Follow us </p>
-          <a
-            href="#"
-            aria-label="Follow us on Facebook"
-            target="_blank"
-          >
+          <a href="#" aria-label="Follow us on Facebook" target="_blank">
             <img src="/assets/facebook_icon.png" alt="Facebook Icon" />
           </a>
           <a
