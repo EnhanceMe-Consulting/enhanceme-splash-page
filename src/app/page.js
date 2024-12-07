@@ -32,13 +32,13 @@ export default function HomePage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
     const form = e.target;
     const data = {
       name: form.name.value,
       email: form.email.value,
     };
-
+  
     try {
       const response = await fetch("/api/subscribe", {
         method: "POST",
@@ -47,13 +47,19 @@ export default function HomePage() {
         },
         body: JSON.stringify(data),
       });
-
+  
       const result = await response.json();
       if (response.ok) {
+        // Success scenario
         setMessageType("success");
-        setFormMessage(result.message || "Successfully subscribed!");
+        setFormMessage(result.message || "You were successfully subscribed!");
         form.reset();
+      } else if (response.status === 400 && result.error === "This email is already subscribed.") {
+        // Handle "already subscribed" error
+        setMessageType("info");
+        setFormMessage("You're already subscribed!");
       } else {
+        // Generic error handling
         setMessageType("error");
         setFormMessage(result.error || "Something went wrong. Please try again.");
       }
@@ -63,6 +69,7 @@ export default function HomePage() {
       setFormMessage("An unexpected error occurred. Please try again.");
     }
   };
+  
 
   return (
     <>

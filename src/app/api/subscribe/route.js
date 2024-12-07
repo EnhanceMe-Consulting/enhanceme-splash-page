@@ -1,60 +1,73 @@
+import mailchimp from "@mailchimp/mailchimp_marketing";
+
+mailchimp.setConfig({
+  apiKey: process.env.MAILCHIMP_API_KEY,
+  server: process.env.MAILCHIMP_SERVER_PREFIX, // Example: 'us8'
+});
+
 export async function POST(req) {
   try {
-    // Check for valid Content-Type
-    if (!req.headers.get("content-type")?.includes("application/json")) {
-      return new Response(JSON.stringify({ error: "Invalid Content-Type" }), {
-        status: 400,
-      });
-    }
+    const body = await req.json(); // Parse the request body
+    const { name, email } = body;
 
-    const { name, email } = await req.json();
-
-    // Validate input
     if (!name || !email) {
-      return new Response(JSON.stringify({ error: "Name and email are required" }), {
-        status: 400,
-      });
+      return new Response(
+        JSON.stringify({ error: "Name and email are required" }),
+        {
+          status: 400,
+          headers: { "Content-Type": "application/json" },
+        }
+      );
     }
 
-    const API_KEY = process.env.MAILCHIMP_API_KEY;
-    const AUDIENCE_ID = process.env.MAILCHIMP_AUDIENCE_ID;
-    const DATACENTER = API_KEY.split("-")[1];
+    try {
+      // Attempt to add the user to the list
+      const response = await mailchimp.lists.addListMember(
+        process.env.MAILCHIMP_AUDIENCE_ID,
+        {
+          email_address: email,
+          status: "subscribed",
+          merge_fields: { FNAME: name },
+        }
+      );
 
-    const url = `https://${DATACENTER}.api.mailchimp.com/3.0/lists/${AUDIENCE_ID}/members`;
+      return new Response(
+        JSON.stringify({
+          message: "You were successfully subscribed!",
+          data: response,
+        }),
+        {
+          status: 200,
+          headers: { "Content-Type": "application/json" },
+        }
+      );
+    } catch (error) {
+      // Handle duplicate email error
+      if (error.response?.body?.title === "Member Exists") {
+        return new Response(
+          JSON.stringify({
+            error: "This email is already subscribed.",
+          }),
+          {
+            status: 400,
+            headers: { "Content-Type": "application/json" },
+          }
+        );
+      }
 
-    // Make the request to Mailchimp API
-    const response = await fetch(url, {
-      method: "POST",
-      headers: {
-        Authorization: `Basic ${Buffer.from(`any:${API_KEY}`).toString("base64")}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        email_address: email,
-        status: "subscribed",
-        merge_fields: {
-          FNAME: name,
-        },
-      }),
-    });
-
-    // Handle non-success responses from Mailchimp
-    if (!response.ok) {
-      const error = await response.json();
-      console.error("Mailchimp API Error:", error);
-      return new Response(JSON.stringify({ error: error.detail || "An error occurred while subscribing" }), {
-        status: response.status,
-      });
+      // Handle other errors
+      throw error;
     }
-
-    // Success response
-    return new Response(JSON.stringify({ message: "Successfully subscribed!" }), {
-      status: 200,
-    });
   } catch (error) {
-    console.error("Error processing subscription:", error);
-    return new Response(JSON.stringify({ error: "Internal Server Error" }), {
-      status: 500,
-    });
+    console.error("Mailchimp Error:", error);
+    return new Response(
+      JSON.stringify({
+        error: error.response?.body?.detail || "An error occurred. Please try again.",
+      }),
+      {
+        status: 500,
+        headers: { "Content-Type": "application/json" },
+      }
+    );
   }
 }
