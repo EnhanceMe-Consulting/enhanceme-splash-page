@@ -183,14 +183,14 @@ export default function HomePage() {
         </div>
         <div className="social-icons">
           <p>Follow us </p>
-          <a href="#" aria-label="Follow us on Facebook" target="_blank">
+          <a href="https://www.facebook.com/enhanceme.consulting/" 
+            target="_blank" 
+            aria-label="Follow us on Facebook">
             <img src="/assets/facebook_icon.png" alt="Facebook Icon" />
           </a>
-          <a
-            href="https://www.instagram.com/enhanceme.consulting/"
+          <a href="https://www.instagram.com/enhanceme.consulting/"
             target="_blank"
-            aria-label="Follow us on Instagram"
-          >
+            aria-label="Follow us on Instagram">
             <img src="/assets/instagram_icon.png" alt="Instagram Icon" />
           </a>
         </div>
