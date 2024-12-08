@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination } from "swiper/modules";
+import { trackEvent } from "../utils/analytics";
 import "swiper/css";
 import "swiper/css/pagination";
 
@@ -30,15 +31,16 @@ export default function HomePage() {
     }
   }, []);
 
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
     const form = e.target;
     const data = {
       name: form.name.value,
       email: form.email.value,
     };
-  
+
     try {
       const response = await fetch("/api/subscribe", {
         method: "POST",
@@ -47,17 +49,23 @@ export default function HomePage() {
         },
         body: JSON.stringify(data),
       });
-  
+
       const result = await response.json();
       if (response.ok) {
         // Success scenario
         setMessageType("success");
         setFormMessage(result.message || "You were successfully subscribed!");
         form.reset();
+
+        // Track successful subscription
+        trackEvent("subscribe", "Form", "Subscription Form", 1);
       } else if (response.status === 400 && result.error === "This email is already subscribed.") {
         // Handle "already subscribed" error
         setMessageType("info");
         setFormMessage("You're already subscribed!");
+
+        // Track already subscribed
+        trackEvent("subscribe_error", "Form", "Subscription Form - Already Subscribed", 0);
       } else {
         // Generic error handling
         setMessageType("error");
@@ -69,11 +77,11 @@ export default function HomePage() {
       setFormMessage("An unexpected error occurred. Please try again.");
     }
   };
-  
+
 
   return (
     <>
-    <div className="background-pattern"></div>
+      <div className="background-pattern"></div>
       <header>
         <div className="logo">
           <img src="/assets/logo-white.svg" alt="EnhanceMe Logo" />
@@ -183,14 +191,20 @@ export default function HomePage() {
         </div>
         <div className="social-icons">
           <p>Follow us </p>
-          <a href="https://www.facebook.com/enhanceme.consulting/" 
-            target="_blank" 
-            aria-label="Follow us on Facebook">
+          <a
+            href="https://www.facebook.com/enhanceme.consulting/"
+            target="_blank"
+            aria-label="Follow us on Facebook"
+            onClick={() => trackEvent("social_click", "Social Media", "Facebook")}
+          >
             <img src="/assets/facebook_icon.png" alt="Facebook Icon" />
           </a>
-          <a href="https://www.instagram.com/enhanceme.consulting/"
+          <a
+            href="https://www.instagram.com/enhanceme.consulting/"
             target="_blank"
-            aria-label="Follow us on Instagram">
+            aria-label="Follow us on Instagram"
+            onClick={() => trackEvent("social_click", "Social Media", "Instagram")}
+          >
             <img src="/assets/instagram_icon.png" alt="Instagram Icon" />
           </a>
         </div>
