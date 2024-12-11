@@ -99,46 +99,46 @@ export default function HomePage() {
           <section className="swiper">
             <Swiper modules={[Pagination]} pagination={{ clickable: true }} loop>
               <SwiperSlide>
-                <img src="/assets/image_1_mobile.jpg" alt="Profile Image 1" />
+                <img src="/assets/image_1.jpeg" alt="Profile Image 1" />
               </SwiperSlide>
               <SwiperSlide>
-                <img src="/assets/image_2_mobile.jpg" alt="Profile Image 2" />
+                <img src="/assets/image_2.jpeg" alt="Profile Image 2" />
               </SwiperSlide>
               <SwiperSlide>
-                <img src="/assets/image_3_mobile.jpg" alt="Profile Image 3" />
+                <img src="/assets/image_3.jpeg" alt="Profile Image 3" />
               </SwiperSlide>
               <SwiperSlide>
-                <img src="/assets/image_4_mobile.jpg" alt="Profile Image 4" />
+                <img src="/assets/image_4.jpeg" alt="Profile Image 4" />
               </SwiperSlide>
               <SwiperSlide>
-                <img src="/assets/image_5_mobile.jpg" alt="Profile Image 5" />
+                <img src="/assets/image_5.jpeg" alt="Profile Image 5" />
               </SwiperSlide>
             </Swiper>
           </section>
         ) : (
           <section className="gallery">
             <img
-              src="/assets/image_1.jpg"
+              src="/assets/image_1.jpeg"
               alt="Profile Image 1"
               className="medium"
             />
             <img
-              src="/assets/image_2.jpg"
+              src="/assets/image_2.jpeg"
               alt="Profile Image 2"
               className="small"
             />
             <img
-              src="/assets/image_3.jpg"
+              src="/assets/image_3.jpeg"
               alt="Profile Image 3"
               className="large"
             />
             <img
-              src="/assets/image_4.jpg"
+              src="/assets/image_4.jpeg"
               alt="Profile Image 4"
               className="small"
             />
             <img
-              src="/assets/image_5.jpg"
+              src="/assets/image_5.jpeg"
               alt="Profile Image 5"
               className="medium"
             />

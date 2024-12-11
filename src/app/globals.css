@@ -126,6 +126,9 @@ body {
   .swiper {
     display: block;
   }
+  .swiper img{
+    max-width: 95%;
+  }
 }
 
 /* Subscribe Section */
