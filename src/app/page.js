@@ -149,7 +149,7 @@ export default function HomePage() {
           <div className="content-subscribe">
             <p>Stay ahead of the curve. Subscribe!</p>
             <p className="privacy-note">
-              We respect your privacy. No spam, only valuable updates.
+              We respect your privacy. <span className="mobile-break">No spam, only valuable updates.</span>
             </p>
           </div>
           <form onSubmit={handleSubmit}>
@@ -185,8 +185,7 @@ export default function HomePage() {
       <footer>
         <div className="copyright">
           <p>
-            Copyright &copy; <span id="year"></span> EnhanceMe - All Rights
-            Reserved.
+            Copyright &copy; <span id="year"></span> EnhanceMe - <span className="mobile-break">All Rights Reserved.</span>
           </p>
         </div>
         <div className="social-icons">

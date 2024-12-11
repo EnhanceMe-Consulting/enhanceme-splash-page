@@ -44,7 +44,7 @@ body {
 
 /* Logo */
 .logo {
-  margin: 10rem auto 2rem;
+  margin: 5rem auto 2rem;
   padding: 0 2rem;
 }
 
@@ -71,6 +71,7 @@ body {
 @media (min-width: 900px) {
   .logo {
     padding: unset;
+    margin-top: 10rem;
   }
 
   .logo img {
@@ -295,3 +296,27 @@ footer {
     display:block;
   }
 }
+
+/* Footer Styles */
+footer {
+  display: flex;
+  flex-direction: column; /* Stack vertically by default for mobile */
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem; /* Space between text and icons */
+  padding: 2rem;
+  color: var(--text-color);
+  font-size: var(--font-size-medium);
+}
+
+/* Ensure smaller screens wrap text for elements with .mobile-break class */
+@media (max-width: 600px) {
+  .mobile-break {
+    display: block; /* Stack text vertically */
+    margin-top: 0.5rem; /* Add spacing above */
+    word-wrap: break-word; /* Allow breaking long words */
+    white-space: normal; /* Enable wrapping */
+  }
+}
+
+
