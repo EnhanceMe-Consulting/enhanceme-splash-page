@@ -16,7 +16,7 @@ export const metadata = {
     url: "https://www.enhanceme.io",
     images: [
       {
-        url: "/assets/OG.png",
+        url: "/assets/OG.webp",
         width: 1200,
         height: 630,
         alt: "EnhanceMe - Build Meaningful Relationships",
