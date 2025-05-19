@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination } from "swiper/modules";
-import { trackEvent } from "../utils/analytics";
 import "swiper/css";
 import "swiper/css/pagination";
 
@@ -57,15 +56,11 @@ export default function HomePage() {
         setFormMessage(result.message || "You were successfully subscribed!");
         form.reset();
 
-        // Track successful subscription
-        trackEvent("subscribe", "Form", "Subscription Form", 1);
       } else if (response.status === 400 && result.error === "This email is already subscribed.") {
         // Handle "already subscribed" error
         setMessageType("info");
         setFormMessage("You're already subscribed!");
 
-        // Track already subscribed
-        trackEvent("subscribe_error", "Form", "Subscription Form - Already Subscribed", 0);
       } else {
         // Generic error handling
         setMessageType("error");
@@ -194,7 +189,6 @@ export default function HomePage() {
             href="https://www.facebook.com/enhanceme.consulting/"
             target="_blank"
             aria-label="Follow us on Facebook"
-            onClick={() => trackEvent("social_click", "Social Media", "Facebook")}
           >
             <img src="/assets/facebook_icon.png" alt="Facebook Icon" />
           </a>
@@ -202,7 +196,6 @@ export default function HomePage() {
             href="https://www.instagram.com/enhanceme.consulting/"
             target="_blank"
             aria-label="Follow us on Instagram"
-            onClick={() => trackEvent("social_click", "Social Media", "Instagram")}
           >
             <img src="/assets/instagram_icon.png" alt="Instagram Icon" />
           </a>
