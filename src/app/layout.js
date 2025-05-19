@@ -1,6 +1,6 @@
 import "./globals.css";
 import { Prata, Poppins } from "next/font/google";
-import Script from "next/script";
+
 
 const prata = Prata({ subsets: ["latin"], weight: "400" });
 const poppins = Poppins({ subsets: ["latin"], weight: ["300", "400", "600", "700"] });
@@ -43,21 +43,6 @@ export default function RootLayout({ children }) {
           href="https://fonts.googleapis.com/css2?family=Clash+Grotesk:wght@200;400;600;800&display=swap"
           rel="stylesheet"
         />
-        {/* Google Analytics Scripts */}
-        <Script
-          src="https://www.googletagmanager.com/gtag/js?id=G-G9HZ4N0CR7"
-          strategy="afterInteractive"
-        />
-        <Script id="google-analytics" strategy="afterInteractive">
-          {`
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', 'G-G9HZ4N0CR7', {
-              page_path: window.location.pathname,
-            });
-          `}
-        </Script>
       </head>
       <body className={`${prata.className} ${poppins.className}`}>
         {children}

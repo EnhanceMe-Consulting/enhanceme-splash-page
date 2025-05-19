@@ -1,36 +1,47 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# EnhanceMe Splash Page (Next.js)
 
-## Getting Started
+This is the original splash page for [EnhanceMe](https://www.enhanceme.io), a digital consulting platform that helps individuals present their authentic selves with confidence—starting with dating profiles, but with impact far beyond that.
 
-First, run the development server:
+🌱 **Status:** This is an archived version of our pre-launch placeholder, originally hosted at [enhanceme.io](https://www.enhanceme.io).  
+🟢 The current live platform is powered by [Ghost CMS](https://www.ghost.org) and can be accessed at [enhanceme.io](https://www.enhanceme.io).  
+🔍 This version remains available at [https://enhanceme-splash-next.vercel.app](https://enhanceme-splash-next.vercel.app) for archival and development reference.
+
+## What this project includes
+
+- A mobile-optimized and responsive splash page built with **Next.js 15**
+- A simple **email subscription form** integrated with a backend Mailchimp API
+- Dynamic image gallery using **Swiper.js** on mobile and CSS gallery on desktop
+- Font pairing via **Google Fonts** (Prata + Poppins)
+- Social links for Facebook and Instagram
+
+## 🛠 Tech Stack
+
+- Framework: [Next.js](https://nextjs.org/)
+- Deployment: [Vercel](https://vercel.com/)
+- Styling: Custom CSS with global fonts
+- Email: [Mailchimp Marketing API](https://mailchimp.com/developer/)
+- Slider: [Swiper.js](https://swiperjs.com/)
+
+## 🚀 Getting Started (Local Dev)
+
+Clone the repo and run the development server:
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Then open [http://localhost:3000](http://localhost:3000) in your browser.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+## 📁 Main Files
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- `app/page.js`: Splash content, subscription form, responsive gallery  
+- `app/layout.js`: Metadata, OG tags, and fonts 
 
-## Learn More
+## 📌 Notes
 
-To learn more about Next.js, take a look at the following resources:
+- This splash page was active during our early access phase (pre-May 2025).
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 🤝 Contributors
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+This project was initiated and maintained by the EnhanceMe team during its pre-launch phase.
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
